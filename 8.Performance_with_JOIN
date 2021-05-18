@@ -1,0 +1,23 @@
+
+-- 1.
+drop view if exists vreception_cat;
+CREATE VIEW vreception_cat AS
+select a."reception_id",
+       a."reception_dt",
+       b."cat_id",
+       b."catname_nm"
+from public."Catreception" a
+         INNER JOIN public."Cat" b ON (a."cat_id" = b."cat_id")
+order by a."reception_dt";
+
+-- 2.
+drop view if exists vservice_price;
+CREATE VIEW vservice_price AS
+SELECT a."service_id",
+       b."service_nm",
+       a."pdate_dt",
+       a."price_amt"
+FROM public."Cprice" a
+         INNER JOIN public."CatService" b ON (a."service_id" = b."service_id");
+
+

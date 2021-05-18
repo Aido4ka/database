@@ -1,0 +1,10 @@
+-- Процедуру можно запустить например на добавление данных в таблицу CDayDohodValue
+
+CREATE OR REPLACE PROCEDURE public.ins_in_CDayDohod(vDate date, vSum numeric(18,2))
+LANGUAGE sql
+AS $$
+INSERT INTO public."CDayDohodValue" VALUES (vDate,vSum);
+$$;
+
+-- так можно проверить
+-- CALL ins_in_CDayDohod(make_date(2021, 5, 5), 65555.23);

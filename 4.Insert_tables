@@ -1,0 +1,223 @@
+drop table if exists "Client" cascade;
+drop table if exists Cat cascade;
+drop table if exists "CatEmpl" cascade;
+drop table if exists "ServiceEmpl" cascade;
+drop table if exists "CatCare" cascade;
+drop table if exists "CatService" cascade;
+drop table if exists "Cprice" cascade;
+
+CREATE TABLE if not exists "Client"
+(
+    client_id  integer               NOT NULL primary key,
+    surname_nm character varying(50) NOT NULL,
+    fname_nm   character varying(50) NOT NULL,
+    pname_nm   character varying(50),
+    phone_no   character varying(20),
+    address_nm character varying(120)
+);
+
+CREATE TABLE if not exists "Cat"
+(
+    cat_id     integer               NOT NULL,
+    client_id  integer               NOT NULL,
+    catname_nm character varying(50) NOT NULL
+);
+
+CREATE TABLE if not exists "CatEmpl"
+(
+    empl_id      integer               NOT NULL,
+    surname_nm   character varying(50) NOT NULL,
+    fname_nm     character varying(50) NOT NULL,
+    pname_nm     character varying(50),
+    empltype_flg boolean               NOT NULL,
+    phone_no     character varying(20)
+);
+
+CREATE TABLE if not exists "ServiceEmpl"
+(
+    service_id integer NOT NULL,
+    empl_id    integer NOT NULL
+);
+
+CREATE TABLE if not exists "CatService"
+(
+    service_id integer               NOT NULL,
+    service_nm character varying(50) NOT NULL
+);
+
+CREATE TABLE if not exists "Purchase"
+(
+    product_id  integer               NOT NULL,
+    product_nm  character varying(50) NOT NULL,
+    product_atm integer               NOT NULL,
+    empl_id     integer               NOT NULL
+);
+
+
+CREATE TABLE if not exists "Cprice"
+(
+    price_id   integer        NOT NULL,
+    service_id integer        NOT NULL,
+    pdate_dt   date           NOT NULL,
+    price_amt  numeric(18, 2) NOT NULL
+);
+
+CREATE TABLE if not exists "Catreception"
+(
+    reception_id integer NOT NULL,
+    reception_dt date    NOT NULL,
+    cat_id       integer NOT NULL
+);
+
+
+CREATE TABLE if not exists "CatCare"
+(
+    care_id      integer NOT NULL,
+    reception_id integer NOT NULL,
+    empl_id      integer NOT NULL,
+    service_id   integer NOT NULL,
+    price_id     integer NOT NULL,
+    begin_dt     date,
+    end_dt       date,
+    day_cnt      integer,
+    calc_amt     numeric(18, 2)
+);
+
+
+INSERT INTO public."Client"(client_id, "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (1, 'Иванов', 'Иван', 'Иванович', '98765432198723567876', 'Садовая 18');
+INSERT INTO public."Client"("client_id", "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (2, 'Петров', 'Петр', 'Петрович', '88765432198723567876', 'Садовая 20');
+INSERT INTO public."Client"("client_id", "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (3, 'Поплавский', 'Влад', 'Петрович', '58765432198723567876', 'Киевская 150');
+INSERT INTO public."Client"("client_id", "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (4, 'Магарыч', 'Алоизий', 'Петрович', '28765432198723567876', 'Подвальная 3');
+INSERT INTO public."Client"("client_id", "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (5, 'Винницкий', 'Миша', 'Михайлович', '18765432198723567876', 'Одесская 7');
+
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (1, 1, 'Соня');
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (2, 2, 'Гудвин');
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (3, 3, 'Саймон');
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (4, 3, 'Бегемот');
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (5, 4, 'Изольда');
+INSERT INTO public."Cat"("cat_id", "client_id", "catname_nm")
+VALUES (6, 5, 'Царапка');
+
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (1, 'Стерилизация');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (2, 'Кастрация');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (3, 'МРТ');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (4, 'Лаборатория');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (5, 'Анализы');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (6, 'Инфекционные заболевания');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (7, 'Лечение зубов');
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (8, 'Гостиница');
+
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (1, 'Врач 1', 'Имя 1', 'Отчество 1', True, '343443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (2, 'Врач 2', 'Имя 2', 'Отчество 2', True, '443443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (3, 'Врач 3', 'Имя 3', 'Отчество 3', True, '443443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (4, 'Врач 4', 'Имя 4', 'Отчество 4', True, '443443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (5, 'Врач 5', 'Имя 5', 'Отчество 5', True, '443443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (6, 'Врач 6', 'Имя 6', 'Отчество 6', True, '443443');
+INSERT INTO public."CatEmpl"("empl_id", "surname_nm", "fname_nm", "pname_nm", "empltype_flg", "phone_no")
+VALUES (7, 'Не Врач 1', 'Имя', 'Отчество', False, '443443');
+
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (1, 1);
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (2, 2);
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (3, 3);
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (4, 4);
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (5, 5);
+INSERT INTO public."ServiceEmpl"("service_id", "empl_id")
+VALUES (6, 6);
+
+
+INSERT INTO public."Purchase"("product_id", "product_nm", "product_atm", "empl_id")
+VALUES (1, 'Корм', '10000', 2);
+INSERT INTO public."Purchase"("product_id", "product_nm", "product_atm", "empl_id")
+VALUES (2, 'Медикаменты', '1000000', 2);
+INSERT INTO public."Purchase"("product_id", "product_nm", "product_atm", "empl_id")
+VALUES (3, 'Клетки', '10000', 2);
+INSERT INTO public."Purchase"("product_id", "product_nm", "product_atm", "empl_id")
+VALUES (4, 'Песок', '8000', 2);
+INSERT INTO public."Purchase"("product_id", "product_nm", "product_atm", "empl_id")
+VALUES (5, 'Игрушки', '9999', 2);
+
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (1, 1, make_date(2020, 4, 30), 10000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (2, 2, make_date(2020, 4, 30), 11000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (3, 3, make_date(2020, 4, 30), 18000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (4, 4, make_date(2020, 4, 30), 5000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (5, 5, make_date(2020, 4, 30), 7000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (6, 6, make_date(2020, 4, 30), 8000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (7, 7, make_date(2020, 4, 30), 3000);
+INSERT INTO public."Cprice"("price_id", "service_id", "pdate_dt", "price_amt")
+VALUES (8, 8, make_date(2020, 4, 30), 1000);
+
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (1, make_date(2020, 5, 1), 1);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (2, make_date(2020, 5, 1), 2);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (3, make_date(2020, 5, 2), 3);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (4, make_date(2020, 5, 2), 4);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (5, make_date(2020, 5, 3), 5);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (6, make_date(2020, 5, 4), 6);
+INSERT INTO public."Catreception"("reception_id", "reception_dt", "cat_id")
+VALUES (7, make_date(2020, 5, 5), 1);
+
+
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (1, 1, 1, 3, 3, null, null, null, 18000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (2, 2, 2, 4, 4, null, null, null, 5000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (3, 3, 3, 5, 5, null, null, null, 7000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (4, 4, 3, 5, 5, null, null, null, 7000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (5, 5, 5, 6, 6, null, null, null, 8000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (6, 6, 7, 8, 8, make_date(2020, 5, 1), make_date(2020, 5, 5), 4, 4000);
+INSERT INTO public."CatCare"("care_id", "reception_id", "empl_id", "service_id", "price_id", "begin_dt", "end_dt",
+                             "day_cnt", "calc_amt")
+VALUES (7, 7, 6, 5, 5, null, null, null, 7000);
+
+

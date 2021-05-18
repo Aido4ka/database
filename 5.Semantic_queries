@@ -1,0 +1,78 @@
+-- 1.
+-- Просмотр клиентов с их питомцами
+
+SELECT a."client_id",
+       a."surname_nm",
+       a."fname_nm",
+       a."pname_nm",
+       a."phone_no",
+       a."address_nm",
+       b."catname_nm"
+FROM public."Client" a,
+     public."Cat" b
+WHERE a."client_id" = b."client_id";
+
+-- 2.
+-- Просмотр стоимости услуг клиники с датами
+
+SELECT a."service_id", b."service_nm", a."pdate_dt", a."price_amt"
+FROM public."Cprice" a,
+     public."CatService" b
+WHERE a."service_id" = b."service_id";
+
+-- 3.
+-- Просмотр принятых котиков по возрастанию даты приема
+SELECT a."reception_id",
+       a."reception_dt",
+       b."catname_nm"
+FROM public."Catreception" a,
+     public."Cat" b
+WHERE a."cat_id" = b."cat_id"
+ORDER BY a."reception_dt" ASC;
+
+-- Просмотр принятых котиков по убыванию даты приема
+SELECT a."reception_id",
+       a."reception_dt",
+       b."catname_nm"
+FROM public."Catreception" a,
+     public."Cat" b
+WHERE a."cat_id" = b."cat_id"
+ORDER BY a."reception_dt" DESC;
+
+-- 4.
+-- Просмотр принятых котиков с их хозяевами(клиентами) по возрастанию даты приема
+SELECT a."reception_id",
+       a."reception_dt",
+       b."catname_nm",
+       c."surname_nm",
+       c."fname_nm"
+FROM public."Catreception" a,
+     public."Cat" b,
+     public."Client" c
+WHERE a."cat_id" = b."cat_id"
+  and b."client_id" = c."client_id"
+ORDER BY a."reception_dt" ASC;
+
+-- 5.
+-- Основной запрос по лечению каждого питомца
+SELECT a."care_id",
+       b."cat_id",
+       e."catname_nm",
+       b."reception_dt",
+       c."surname_nm",
+       d."service_nm",
+       a."price_id",
+       a."begin_dt",
+       a."end_dt",
+       a."day_cnt",
+       a."calc_amt"
+FROM public."CatCare" a,
+     public."Catreception" b,
+     public."CatEmpl" c,
+     public."CatService" d,
+     public."Cat" e
+WHERE a."reception_id" = b."reception_id"
+  and a."empl_id" = c."empl_id"
+  and a."service_id" = d."service_id"
+  and b."cat_id" = e."cat_id";
+

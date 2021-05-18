@@ -1,0 +1,84 @@
+drop table if exists "Client" cascade;
+drop table if exists Cat cascade;
+drop table if exists "CatEmpl" cascade;
+drop table if exists "ServiceEmpl" cascade;
+drop table if exists "CatCare" cascade;
+drop table if exists "CatService" cascade;
+drop table if exists "Cprice" cascade;
+
+CREATE TABLE if not exists "Client"
+(
+    client_id  integer               NOT NULL primary key,
+    surname_nm character varying(50) NOT NULL,
+    fname_nm   character varying(50) NOT NULL,
+    pname_nm   character varying(50),
+    phone_no   character varying(20),
+    address_nm character varying(120)
+);
+
+CREATE TABLE if not exists "Cat"
+(
+    cat_id     integer               NOT NULL,
+    client_id  integer               NOT NULL,
+    catname_nm character varying(50) NOT NULL
+);
+
+CREATE TABLE if not exists "CatEmpl"
+(
+    empl_id      integer               NOT NULL,
+    surname_nm   character varying(50) NOT NULL,
+    fname_nm     character varying(50) NOT NULL,
+    pname_nm     character varying(50),
+    empltype_flg boolean               NOT NULL,
+    phone_no     character varying(20)
+);
+
+CREATE TABLE if not exists "ServiceEmpl"
+(
+    service_id integer NOT NULL,
+    empl_id    integer NOT NULL
+);
+
+CREATE TABLE if not exists "CatService"
+(
+    service_id integer               NOT NULL,
+    service_nm character varying(50) NOT NULL
+);
+
+CREATE TABLE if not exists "Purchase"
+(
+    product_id  integer               NOT NULL,
+    product_nm  character varying(50) NOT NULL,
+    product_atm integer               NOT NULL,
+    empl_id     integer               NOT NULL
+);
+
+
+CREATE TABLE if not exists "Cprice"
+(
+    price_id   integer        NOT NULL,
+    service_id integer        NOT NULL,
+    pdate_dt   date           NOT NULL,
+    price_amt  numeric(18, 2) NOT NULL
+);
+
+CREATE TABLE if not exists "Catreception"
+(
+    reception_id integer NOT NULL,
+    reception_dt date    NOT NULL,
+    cat_id       integer NOT NULL
+);
+
+
+CREATE TABLE if not exists "CatCare"
+(
+    care_id      integer NOT NULL,
+    reception_id integer NOT NULL,
+    empl_id      integer NOT NULL,
+    service_id   integer NOT NULL,
+    price_id     integer NOT NULL,
+    begin_dt     date,
+    end_dt       date,
+    day_cnt      integer,
+    calc_amt     numeric(18, 2)
+);

@@ -1,0 +1,69 @@
+
+--Создание - ВСТАВИТЬ запись в базу данных.
+--Чтение - ВЫБРАТЬ запись из базы данных и просмотреть ее.
+--Обновление - ОБНОВИТЬ запись полностью или частично.
+--Удалить - СТЕРЕТЬ запись.
+
+--1. вставка записи в таблицу
+INSERT INTO public."CatService"("service_id", "service_nm")
+VALUES (100, 'Подстрижка');
+
+--2. проверка вставки записи в таблицу
+SELECT *
+FROM public."CatService"
+WHERE "service_id" = 100;
+
+--3. обновление записи
+UPDATE public."CatService"
+SET "service_id"=101,
+    "service_nm"='Подстрижка 1'
+WHERE "service_id" = 100;
+
+--проверка обновления записи
+SELECT *
+FROM public."CatService"
+WHERE "service_id" = 101;
+
+--4. Удаление записи
+DELETE
+FROM public."CatService"
+WHERE "service_id" = 101;
+
+--проверка удаления записи
+SELECT *
+FROM public."CatService"
+WHERE "service_id" = 101;
+
+
+
+-- 2 таблица
+
+--1. вставка записи в таблицу
+INSERT INTO public."Client"("client_id", "surname_nm", "fname_nm", "pname_nm", "phone_no", "address_nm")
+VALUES (500, 'ннннн', 'kjhjk', '', '88888', 'dkjhfj');
+
+--2. проверка вставки записи в таблицу
+SELECT *
+FROM public."Client"
+WHERE "client_id" = 500;
+
+--3. обновление записи
+UPDATE public."Client"
+SET "client_id"=505
+WHERE "client_id" = 500;
+
+--проверка обновления записи
+SELECT *
+FROM public."Client"
+WHERE "client_id" = 505;
+
+--4. Удаление записи
+DELETE
+FROM public."Client"
+WHERE "client_id" = 505;
+
+--проверка удаления записи
+SELECT *
+FROM public."Client"
+WHERE "client_id" = 505;
+

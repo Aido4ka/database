@@ -1,0 +1,70 @@
+-- 1.
+
+drop view if exists vcat;
+CREATE VIEW vcat AS
+SELECT a."cat_id",
+       a."client_id",
+       a."catname_nm"
+FROM public."Cat" a;
+
+-- 2.
+drop view if exists vcatcare;
+CREATE VIEW vcatcare AS
+SELECT a."care_id",
+       a."reception_id",
+       a."empl_id",
+       a."service_id",
+       a."price_id",
+       a."begin_dt",
+       a."end_dt",
+       a."day_cnt",
+       a."calc_amt"
+FROM public."CatCare" a;
+
+-- 3.
+drop view if exists vcatempl;
+CREATE VIEW vcatempl AS
+SELECT a."empl_id",
+       a."surname_nm",
+       a."fname_nm",
+       a."pname_nm",
+       a."empltype_flg",
+       a."phone_no"
+FROM public."CatEmpl" a;
+
+-- 4.
+drop view if exists vcatreception;
+CREATE VIEW vcatreception AS
+SELECT a."reception_id",
+       a."reception_dt",
+       a."cat_id"
+FROM public."Catreception" a;
+
+-- 5.
+drop view if exists vcatservice;
+CREATE VIEW vcatservice AS
+SELECT a."service_id",
+       a."service_nm"
+FROM public."CatService" a;
+
+-- 6.
+drop view if exists vClient;
+CREATE VIEW vClient AS
+SELECT a."client_id",
+       a."surname_nm",
+       a."fname_nm",
+       a."pname_nm",
+       left(a."phone_no", 6) || repeat('*', 10) || right(a."phone_no", 4) AS phone,
+       a."address_nm"
+FROM public."Client" a
+ORDER BY a."surname_nm", a."fname_nm", a."pname_nm";
+
+-- 7.
+drop view if exists vcprice;
+CREATE VIEW vcprice AS
+SELECT a."price_id",
+       a."service_id",
+       a."pdate_dt",
+       a."price_amt"
+FROM public."Cprice" a;
+
